@@ -54,7 +54,7 @@ namespace Remind.Me
                     break;
 
                 case 1:
-                // Bring AddtodoPage
+                    Frame.Navigate(typeof(AddTodoPage));
                     break;
             }
         }
