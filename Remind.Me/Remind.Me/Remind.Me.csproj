@@ -85,6 +85,9 @@
     <Compile Include="AddReminderPage.xaml.cs">
       <DependentUpon>AddReminderPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddTodoPage.xaml.cs">
+      <DependentUpon>AddTodoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="AddReminderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddTodoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
