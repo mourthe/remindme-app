@@ -7,8 +7,24 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Add" Label="Add" Click="AppBarButton_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid>
-
+        <Pivot x:Uid="Pivot" Title="REMIND ME" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
+            <PivotItem x:Uid="pivotItemLembrete"
+                       Margin="19,14.5,0,0"
+                       Header="lembretes">
+                <!--Adicionar o lembretes aqui-->
+            </PivotItem>
+            <PivotItem x:Uid="pivotItemTODO"
+                       Margin="19,14.5,0,0"
+                       Header="todo">
+                <!--Adicionar lista de TODO-->
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>
