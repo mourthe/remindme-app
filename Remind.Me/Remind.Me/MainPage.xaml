@@ -16,11 +16,13 @@
     <Grid>
         <Pivot x:Uid="Pivot" Title="REMIND ME" x:Name="pivot" CommonNavigationTransitionInfo.IsStaggerElement="True">
             <PivotItem x:Uid="pivotItemLembrete"
+                       Name="lembretes"
                        Margin="19,14.5,0,0"
                        Header="lembretes">
                 <!--Adicionar o lembretes aqui-->
             </PivotItem>
             <PivotItem x:Uid="pivotItemTODO"
+                       Name="TODO"
                        Margin="19,14.5,0,0"
                        Header="todo">
                 <!--Adicionar lista de TODO-->

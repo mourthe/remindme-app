@@ -46,8 +46,17 @@ namespace Remind.Me
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Bring create page
+        {            
+            switch (pivot.SelectedIndex)
+            {
+                case 0: // Bring AddReminderPage
+                    Frame.Navigate(typeof(AddReminderPage));
+                    break;
+
+                case 1:
+                // Bring AddtodoPage
+                    break;
+            }
         }
     }
 }
