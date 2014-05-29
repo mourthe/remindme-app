@@ -19,7 +19,7 @@
 *.rar
 *.tar
 *.zip
- 
+
 # Logs and databases #
 ######################
 *.log
@@ -36,7 +36,14 @@
 ehthumbs.db
 Thumbs.db
 
-# Debug and Realase folders
+# Build Results #
+#################
+[Bb]in/
+[Oo]bj/
+
+
+# Debug and Release folders #
+#############################
+**/obj/
 **/bin/Debug/
-**/obj/Debug/
 **/bin/Release/
