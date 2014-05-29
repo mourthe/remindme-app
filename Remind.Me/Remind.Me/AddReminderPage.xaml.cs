@@ -40,5 +40,10 @@ namespace Remind.Me
         {
             Frame.GoBack();
         }
+
+        private void SaveBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Save the event
+        }
     }
 }
