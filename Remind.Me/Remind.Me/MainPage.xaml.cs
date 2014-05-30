@@ -23,6 +23,7 @@ namespace Remind.Me
     public sealed partial class MainPage : Page
     {
         private IList<Reminder> reminders;
+        private IList<Todo> todos;
 
         public MainPage()
         {
@@ -31,6 +32,7 @@ namespace Remind.Me
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.reminders = new List<Reminder>();
+            this.todos = new List<Todo>();
         }
 
         /// <summary>
@@ -48,7 +50,7 @@ namespace Remind.Me
 
             if (CameFromAddTodoPage())
             {
-
+                this.todos.Add(((Todo)e.Parameter));
             }
 
             // TODO: If your application contains multiple pages, ensure that you are

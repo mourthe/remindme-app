@@ -43,8 +43,9 @@ namespace Remind.Me
 
         private void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-            // do the saving bit 
-            Frame.GoBack();
+            var newTodo = new Todo(todoNameTextBox.Text, todoDetailsTextBox.Text);
+
+            Frame.Navigate(typeof(MainPage), newTodo);
         }
     }
 }
