@@ -19,13 +19,21 @@
                        Name="lembretes"
                        Margin="19,14.5,0,0"
                        Header="lembretes">
-                <!--Adicionar o lembretes aqui-->
+                <ScrollViewer>
+                    <StackPanel Name="reminderPivotStackPanel" ScrollViewer.VerticalScrollMode="Enabled">
+                        <!--Adicionar o lembretes aqui-->
+                    </StackPanel>
+                </ScrollViewer>
             </PivotItem>
             <PivotItem x:Uid="pivotItemTODO"
                        Name="TODO"
                        Margin="19,14.5,0,0"
                        Header="todo">
-                <!--Adicionar lista de TODO-->
+                <ScrollViewer>
+                    <StackPanel Name="todoPivotStackPanel" ScrollViewer.VerticalScrollMode="Enabled">
+                        <!--Adicionar lista de TODO-->
+                    </StackPanel>
+                </ScrollViewer>
             </PivotItem>
         </Pivot>
     </Grid>
