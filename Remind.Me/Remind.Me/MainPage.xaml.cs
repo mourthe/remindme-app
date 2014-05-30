@@ -41,6 +41,15 @@ namespace Remind.Me
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // Load the reminders list and todos
+            if (CameFromAddRemindersPage())
+            {
+                this.reminders.Add(((Reminder)e.Parameter));
+            }
+
+            if (CameFromAddTodoPage())
+            {
+
+            }
 
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
@@ -61,6 +70,18 @@ namespace Remind.Me
                     Frame.Navigate(typeof(AddTodoPage));
                     break;
             }
+        }
+
+        private bool CameFromAddRemindersPage()
+        {
+            return Frame.BackStack.FirstOrDefault() != null &&
+                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddReminderPage";
+        }
+
+        private bool CameFromAddTodoPage()
+        {
+            return Frame.BackStack.FirstOrDefault() != null &&
+                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddTodoPage";
         }
     }
 }
