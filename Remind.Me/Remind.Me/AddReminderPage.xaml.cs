@@ -43,7 +43,7 @@ namespace Remind.Me
 
         private void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-                  var reminder = new Reminder(reminderNameTextBox.Text,
+            var reminder = new Reminder(reminderNameTextBox.Text,
                                               reminderDetailsTextBox.Text, 
                                               ((ComboBoxItem)myComboBox.SelectedItem).Content.ToString());
             

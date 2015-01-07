@@ -21,7 +21,21 @@
                        Header="lembretes">
                 <ScrollViewer>
                     <StackPanel Name="reminderPivotStackPanel" ScrollViewer.VerticalScrollMode="Enabled">
-                        <!--Adicionar o lembretes aqui-->
+                        <StackPanel.Resources>
+                            <CollectionViewSource x:Name="reminderXAML"/>
+                        </StackPanel.Resources>
+                        <ListView x:Name="lvreminders" Height="450" ItemsSource="{Binding Source={StaticResource reminderXAML}}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
+                                               <Run Text="{Binding Title}"/>
+                                        </TextBlock>
+                                        <ToggleButton x:Name="reminderToggle"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </StackPanel>
                 </ScrollViewer>
             </PivotItem>
@@ -29,11 +43,26 @@
                        Name="TODO"
                        Margin="19,14.5,0,0"
                        Header="todo">
-                <ScrollViewer>
-                    <StackPanel Name="todoPivotStackPanel" ScrollViewer.VerticalScrollMode="Enabled">
-                        <!--Adicionar lista de TODO-->
-                    </StackPanel>
-                </ScrollViewer>
+
+                <StackPanel Name="todoPivotStackPanel">
+                    <StackPanel.Resources>
+                        <CollectionViewSource x:Name="todoXAML"/>
+                    </StackPanel.Resources>
+                    <ListView x:Name="lvtodos" Height="450" ItemsSource="{Binding Source={StaticResource todoXAML}}">
+                        <ListView.ItemTemplate >
+                            <DataTemplate>
+                                <StackPanel ScrollViewer.VerticalScrollMode="Enabled">
+                                    <CheckBox FlowDirection="LeftToRight">
+                                        <TextBlock Style="{StaticResource MessageDialogTitleStyle}" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                               <Run Text="{Binding Title}"/>
+                                        </TextBlock>
+                                    </CheckBox>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <!--Lista de Listas -->
+                </StackPanel>
             </PivotItem>
         </Pivot>
     </Grid>

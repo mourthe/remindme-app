@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -22,8 +23,8 @@ namespace Remind.Me
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private IList<Reminder> reminders;
-        private IList<Todo> todos;
+        private ObservableCollection<Reminder> reminders;
+        private ObservableCollection<Todo> todos;
 
         public MainPage()
         {
@@ -31,8 +32,8 @@ namespace Remind.Me
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
-            this.reminders = new List<Reminder>();
-            this.todos = new List<Todo>();
+            this.reminders = new ObservableCollection<Reminder>();
+            this.todos = new ObservableCollection<Todo>();
         }
 
         /// <summary>
@@ -46,11 +47,15 @@ namespace Remind.Me
             if (CameFromAddRemindersPage())
             {
                 this.reminders.Add(((Reminder)e.Parameter));
+
+                reminderXAML.Source = this.reminders;
             }
 
             if (CameFromAddTodoPage())
             {
                 this.todos.Add(((Todo)e.Parameter));
+
+                todoXAML.Source = this.todos;
             }
 
             // TODO: If your application contains multiple pages, ensure that you are
