@@ -79,6 +79,11 @@ namespace Remind.Me
             }
         }
 
+        private void configuracoes_Click(object sender, RoutedEventArgs e)
+        {
+            //Frame.Navigate(typeof(SettingsPage));
+        }
+
         private bool CameFromAddRemindersPage()
         {
             return Frame.BackStack.FirstOrDefault() != null &&
@@ -89,6 +94,32 @@ namespace Remind.Me
         {
             return Frame.BackStack.FirstOrDefault() != null &&
                 Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddTodoPage";
+        }
+
+        private void TodoCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            // delete the checked todo
+            try
+            {
+                var idx = -1;
+                for (int i = 0; i < this.todos.Count; i++)
+                {
+                    if (this.todos.ElementAt(i).Title.Equals((lvtodos.SelectedItems[0] as Todo).Title))
+                    {
+                        idx = i; break;
+                    }
+                }
+
+                this.todos.RemoveAt(idx);
+            }            
+            catch(Exception){
+
+            }
+        }
+
+        private void lvtodos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var lvi = ((sender as ListView).SelectedItem as ListViewItem);
         }
     }
 }

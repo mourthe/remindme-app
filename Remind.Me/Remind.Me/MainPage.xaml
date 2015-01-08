@@ -9,8 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.BottomAppBar>
         <CommandBar>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="configurações" Click="configuracoes_Click"/>
+            </CommandBar.SecondaryCommands>
             <AppBarButton Icon="Add" Label="Add" Click="AppBarButton_Click"/>
         </CommandBar>
+        
     </Page.BottomAppBar>
 
     <Grid>
@@ -27,12 +31,17 @@
                         <ListView x:Name="lvreminders" Height="450" ItemsSource="{Binding Source={StaticResource reminderXAML}}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
+                                    <Grid ScrollViewer.VerticalScrollMode="Enabled">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="250"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
                                                <Run Text="{Binding Title}"/>
                                         </TextBlock>
-                                        <ToggleButton x:Name="reminderToggle"/>
-                                    </StackPanel>
+                                        <ToggleButton Grid.Column="2" x:Name="reminderToggle"/>
+                                    </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -48,16 +57,21 @@
                     <StackPanel.Resources>
                         <CollectionViewSource x:Name="todoXAML"/>
                     </StackPanel.Resources>
-                    <ListView x:Name="lvtodos" Height="450" ItemsSource="{Binding Source={StaticResource todoXAML}}">
-                        <ListView.ItemTemplate >
+                    <ListView x:Name="lvtodos" Height="450" ItemsSource="{Binding Source={StaticResource todoXAML}}" SelectionChanged="lvtodos_SelectionChanged">
+                        <ListView.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel ScrollViewer.VerticalScrollMode="Enabled">
-                                    <CheckBox FlowDirection="LeftToRight">
-                                        <TextBlock Style="{StaticResource MessageDialogTitleStyle}" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                               <Run Text="{Binding Title}"/>
-                                        </TextBlock>
-                                    </CheckBox>
-                                </StackPanel>
+                                <Grid x:Name="TodoItem" ScrollViewer.VerticalScrollMode="Enabled">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Name="titlebox" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" Text="{Binding Title, Mode=TwoWay}"/>
+                                    <CheckBox Grid.Row="0" Grid.Column="2" IsChecked="{Binding Checked}" Checked="TodoCheckBox_Click"/>
+                                </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

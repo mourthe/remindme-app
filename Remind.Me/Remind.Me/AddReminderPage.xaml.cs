@@ -25,6 +25,8 @@ namespace Remind.Me
         public AddReminderPage()
         {
             this.InitializeComponent();
+
+            reminderDetailsTextBox.Focus(FocusState.Keyboard);
         }
 
         /// <summary>
