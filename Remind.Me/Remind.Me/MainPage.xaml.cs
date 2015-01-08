@@ -81,7 +81,7 @@ namespace Remind.Me
 
         private void configuracoes_Click(object sender, RoutedEventArgs e)
         {
-            //Frame.Navigate(typeof(SettingsPage));
+            Frame.Navigate(typeof(SettingsPage));
         }
 
         private bool CameFromAddRemindersPage()
