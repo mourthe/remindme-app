@@ -43,19 +43,22 @@ namespace Remind.Me
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // Load the reminders list and todos
-            if (CameFromAddRemindersPage())
+            if (e != null)
             {
-                this.reminders.Add(((Reminder)e.Parameter));
+                // Load the reminders list and todos
+                if (CameFromAddRemindersPage())
+                {
+                    this.reminders.Add(((Reminder)e.Parameter));
 
-                reminderXAML.Source = this.reminders;
-            }
+                    reminderXAML.Source = this.reminders;
+                }
 
-            if (CameFromAddTodoPage())
-            {
-                this.todos.Add(((Todo)e.Parameter));
+                if (CameFromAddTodoPage())
+                {
+                    this.todos.Add(((Todo)e.Parameter));
 
-                todoXAML.Source = this.todos;
+                    todoXAML.Source = this.todos;
+                }
             }
 
             // TODO: If your application contains multiple pages, ensure that you are

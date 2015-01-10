@@ -32,7 +32,7 @@
                 <ComboBoxItem Content="Casa"/>
             </ComboBox>
             <TextBlock HorizontalAlignment="Left" Text="Details" FontSize="24"/>
-            <TextBox Name="reminderDetailsTextBox" HorizontalAlignment="Left" TextAlignment="Right" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
+            <TextBox Name="reminderDetailsTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
         </StackPanel>
     </Grid>
 </Page>

@@ -21,16 +21,36 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+       
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="REMIND ME" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
             <TextBlock Text="configurações" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <StackPanel>
-                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">casa</TextBlock>
-                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">casa</TextBlock>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Distance">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">Distancia de aviso:</TextBlock>
+                <ComboBox Grid.Row="0" Grid.Column="1" >
+                    <ComboBoxItem Content="100 m"/>
+                    <ComboBoxItem Content="200 m" IsSelected="True"/>
+                    <ComboBoxItem Content="300 m"/>
+                    <ComboBoxItem Content="500 m"/>
+                </ComboBox>
+            </Grid>
+            <StackPanel Grid.Row="1">
+                <TextBlock  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
+                	<Run Text="Localização da sua casa:"/>
+                </TextBlock>
+                <!--Mapa entra aqui-->
             </StackPanel>
         </Grid>
     </Grid>

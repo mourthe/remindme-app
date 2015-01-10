@@ -81,6 +81,11 @@ namespace Remind.Me
         {
         }
 
+        private void HardwareButtons_BackPressed(object sender, BackClickEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage), null);
+        }
+
         #region NavigationHelper registration
 
         /// <summary>
