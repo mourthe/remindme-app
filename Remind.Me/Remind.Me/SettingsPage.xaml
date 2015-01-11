@@ -32,14 +32,14 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid x:Name="Distance">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 
                 <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">Distancia de aviso:</TextBlock>
-                <ComboBox Grid.Row="0" Grid.Column="1" >
+                <ComboBox  Name="Distance" Grid.Row="0" Grid.Column="1" >
                     <ComboBoxItem Content="100 m"/>
                     <ComboBoxItem Content="200 m" IsSelected="True"/>
                     <ComboBoxItem Content="300 m"/>
@@ -50,7 +50,16 @@
                 <TextBlock  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
                 	<Run Text="Localização da sua casa:"/>
                 </TextBlock>
-                <!--Mapa entra aqui-->
+                <Maps:MapControl Name="SettingsMap" Height="336" Margin="0,0,-0.333,0"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Margin="0,0,10,0" Content="Salvar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Save_Click"/>
+                    <Button Grid.Column="1" Margin="10,0,0,0" Content="Cancelar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Cancel_Click"/>
+                </Grid>
+                
             </StackPanel>
         </Grid>
     </Grid>

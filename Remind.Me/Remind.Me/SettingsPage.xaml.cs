@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Devices.Geolocation;
 
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
@@ -81,11 +82,6 @@ namespace Remind.Me
         {
         }
 
-        private void HardwareButtons_BackPressed(object sender, BackClickEventArgs e)
-        {
-            Frame.Navigate(typeof(MainPage), null);
-        }
-
         #region NavigationHelper registration
 
         /// <summary>
@@ -101,9 +97,33 @@ namespace Remind.Me
         /// </summary>
         /// <param name="e">Provides data for navigation methods and event
         /// handlers that cannot cancel the navigation request.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+
+            // already has saved position
+            if (false /*Check to see if the file exists*/)
+            {
+                /*var myPosition = new Windows.Devices.Geolocation.BasicGeoposition();
+                myPosition.Latitude = 
+                myPosition.Longitude = 
+                 
+                 var myPoint = new Windows.Devices.Geolocation.Geopoint(myPosition);
+                 if (await MyMap.TrySetViewAsync(myPoint, 10D))
+                 {
+                 
+                 }*/
+            }
+            else
+            {
+                var locator = new Geolocator();
+                locator.DesiredAccuracyInMeters = 50;
+            
+                var position = await locator.GetGeopositionAsync();
+
+                await SettingsMap.TrySetViewAsync(position.Coordinate.Point, 18D);
+            }
+
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -112,5 +132,20 @@ namespace Remind.Me
         }
 
         #endregion
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            var position = String.Format("{0}, {1}", SettingsMap.Center.Position.Latitude, 
+                                                        SettingsMap.Center.Position.Longitude);
+            var d = Distance.SelectedValue;
+
+             // Main.SAlvar settings
+            Frame.Navigate(typeof(MainPage));
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(MainPage));
+        }
     }
 }
