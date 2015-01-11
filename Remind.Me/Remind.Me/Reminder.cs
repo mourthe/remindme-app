@@ -11,14 +11,14 @@ namespace Remind.Me
         public string Title { get; private set; }
         public string Details { get; private set; }
         public string Local { get; private set; }
-        public bool Inactive { get; set; }
+        public bool Active { get; set; }
 
         public Reminder(string title, string details, string local)
         {
             this.Title = title;
             this.Details = details;
             this.Local = local;
-            this.Inactive = false;
+            this.Active = true;
         }
     }
 }

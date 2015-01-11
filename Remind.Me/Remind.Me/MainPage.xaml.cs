@@ -43,22 +43,19 @@ namespace Remind.Me
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e != null)
+            // Load the reminders list and todos
+            if (CameFromAddRemindersPage())
             {
-                // Load the reminders list and todos
-                if (CameFromAddRemindersPage())
-                {
-                    this.reminders.Add(((Reminder)e.Parameter));
+                this.reminders.Add(((Reminder)e.Parameter));
 
-                    reminderXAML.Source = this.reminders;
-                }
+                reminderXAML.Source = this.reminders;
+            }
 
-                if (CameFromAddTodoPage())
-                {
-                    this.todos.Add(((Todo)e.Parameter));
+            if (CameFromAddTodoPage())
+            {
+                this.todos.Add(((Todo)e.Parameter));
 
-                    todoXAML.Source = this.todos;
-                }
+                todoXAML.Source = this.todos;
             }
 
             // TODO: If your application contains multiple pages, ensure that you are
@@ -99,6 +96,7 @@ namespace Remind.Me
                 Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddTodoPage";
         }
 
+        #region TODO
         private void TodoCheckBox_Click(object sender, RoutedEventArgs e)
         {
             // delete the checked todo
@@ -113,9 +111,11 @@ namespace Remind.Me
                     }
                 }
 
+                // remove from the database
                 this.todos.RemoveAt(idx);
-            }            
-            catch(Exception){
+            }
+            catch (Exception)
+            {
 
             }
         }
@@ -124,5 +124,57 @@ namespace Remind.Me
         {
             var lvi = ((sender as ListView).SelectedItem as ListViewItem);
         }
+        
+        private void TodoEdit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region Reminder
+
+        private void ListViewItem_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            FrameworkElement senderElement = sender as FrameworkElement;
+            FlyoutBase flyoutBase = FlyoutBase.GetAttachedFlyout(senderElement);
+
+            flyoutBase.ShowAt(senderElement);
+        }
+
+        private void DeleteRemindersItem_Click(object sender, RoutedEventArgs e)
+        {
+            var idx = GetIndexOfElement();
+
+            // remove from the database
+            this.reminders.RemoveAt(idx);
+        }
+
+        private int GetIndexOfElement()
+        {
+            var idx = -1;
+            for (int i = 0; i < this.reminders.Count; i++)
+            {
+                if (this.reminders.ElementAt(i).Title.Equals((lvreminders.SelectedItem as Reminder).Title))
+                {
+                    idx = i; break;
+                }
+            }
+            return idx;
+        }
+
+        private void EditReminder_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void reminderToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            var idx = GetIndexOfElement();
+
+            // update on the data database
+            this.reminders.ElementAt(idx).Active = (sender as ToggleSwitch).IsOn;
+        }
+
+        #endregion
     }
 }

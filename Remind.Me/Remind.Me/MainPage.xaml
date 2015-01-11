@@ -5,7 +5,8 @@
     xmlns:local="using:Remind.Me"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    xmlns:core="clr-namespace:WpfTest.Core"
+    
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.BottomAppBar>
         <CommandBar>
@@ -31,16 +32,24 @@
                         <ListView x:Name="lvreminders" Height="450" ItemsSource="{Binding Source={StaticResource reminderXAML}}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid ScrollViewer.VerticalScrollMode="Enabled">
+                                    <Grid ScrollViewer.VerticalScrollMode="Enabled">                                        
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="250"/>
+                                            <ColumnDefinition Width="260"/>
                                             <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="100"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
+                                        <StackPanel x:Name="ReminderItemRoot" Grid.Column="0" Holding="ListViewItem_Holding">
+                                            <FlyoutBase.AttachedFlyout>
+                                                <MenuFlyout>
+                                                    <MenuFlyoutItem Text="Delete"  Click="DeleteRemindersItem_Click"/>
+                                                    <MenuFlyoutItem Text="Edit" Click="EditReminder_Click"/>
+                                                </MenuFlyout>
+                                            </FlyoutBase.AttachedFlyout>
+                                            <TextBlock x:Name="ReminderName" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
                                                <Run Text="{Binding Title}"/>
-                                        </TextBlock>
-                                        <ToggleButton Grid.Column="2" x:Name="reminderToggle"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <ToggleSwitch Grid.Column="2" x:Name="reminderToggle" IsOn="{Binding Active}"  Toggled="reminderToggle_Toggled"/>
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -52,7 +61,6 @@
                        Name="TODO"
                        Margin="19,14.5,0,0"
                        Header="todo">
-
                 <StackPanel Name="todoPivotStackPanel">
                     <StackPanel.Resources>
                         <CollectionViewSource x:Name="todoXAML"/>
@@ -69,7 +77,15 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Name="titlebox" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" Text="{Binding Title, Mode=TwoWay}"/>
+                                    <StackPanel x:Name="TodoItemRoot" Grid.Column="0" Holding="ListViewItem_Holding">
+                                        <FlyoutBase.AttachedFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Delete"  Click="TodoCheckBox_Click"/>
+                                                <MenuFlyoutItem Text="Edit" Click="TodoEdit_Click"/>
+                                            </MenuFlyout>
+                                        </FlyoutBase.AttachedFlyout>
+                                        <TextBlock Grid.Row="0" Grid.Column="0" Name="titlebox" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left" Text="{Binding Title, Mode=TwoWay}"/>
+                                    </StackPanel>
                                     <CheckBox Grid.Row="0" Grid.Column="2" IsChecked="{Binding Checked}" Checked="TodoCheckBox_Click"/>
                                 </Grid>
                             </DataTemplate>

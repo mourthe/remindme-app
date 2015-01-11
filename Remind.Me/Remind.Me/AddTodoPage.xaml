@@ -21,8 +21,8 @@
         </Grid.RowDefinitions>
 
         <TextBlock Margin="20,0,20,0" Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}">TODO's</TextBlock>
-        <StackPanel Name="todoStackPanel" Grid.Row="1" Margin="20,0,0,0">
-            <TextBlock HorizontalAlignment="Left" Text="Title" FontSize="24"/>
+        <StackPanel Name="todoStackPanel" Grid.Row="1" Margin="20,0,0,0" >
+            <TextBlock HorizontalAlignment="Left" Text="Title" FontSize="24" />
             <TextBox Name="todoNameTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
             <TextBlock HorizontalAlignment="Left" Text="Details" FontSize="24"/>
             <TextBox Name="todoDetailsTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
