@@ -40,7 +40,7 @@ namespace Remind.Me
 
         private void CancelBarButton_Click(object sender, RoutedEventArgs e)
         {
-            Frame.GoBack();
+            Frame.Navigate(typeof(MainPage), null); 
         }
 
         private void SaveBarButton_Click(object sender, RoutedEventArgs e)

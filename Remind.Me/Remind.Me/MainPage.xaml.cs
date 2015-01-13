@@ -44,14 +44,14 @@ namespace Remind.Me
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             // Load the reminders list and todos
-            if (CameFromAddRemindersPage())
+            if (e.Parameter != null && CameFromAddRemindersPage())
             {
                 this.reminders.Add(((Reminder)e.Parameter));
 
                 reminderXAML.Source = this.reminders;
             }
 
-            if (CameFromAddTodoPage())
+            if (e.Parameter != null &&  CameFromAddTodoPage())
             {
                 this.todos.Add(((Todo)e.Parameter));
 
@@ -169,10 +169,13 @@ namespace Remind.Me
 
         private void reminderToggle_Toggled(object sender, RoutedEventArgs e)
         {
-            var idx = GetIndexOfElement();
+            if (this.reminders.Count > 0)
+            {
+                var idx = GetIndexOfElement();
 
-            // update on the data database
-            this.reminders.ElementAt(idx).Active = (sender as ToggleSwitch).IsOn;
+                // update on the data database
+                this.reminders.ElementAt(idx).Active = (sender as ToggleSwitch).IsOn;
+            }
         }
 
         #endregion

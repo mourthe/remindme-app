@@ -80,7 +80,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Folder Include="Database\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Remind.Me\Reminder.cs">
@@ -89,6 +88,7 @@
     <Compile Include="..\Remind.Me\Todo.cs">
       <Link>Todo.cs</Link>
     </Compile>
+    <Compile Include="Database\Access.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

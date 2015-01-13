@@ -1,4 +1,5 @@
-﻿using Remind.Me.Common;
+﻿using Newtonsoft.Json;
+using Remind.Me.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Devices.Geolocation;
 
+using Remind.Me.Main;
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Remind.Me
@@ -29,13 +31,16 @@ namespace Remind.Me
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
+        // settings
+        private SettingsFile _settings = null;
+
         public SettingsPage()
         {
             this.InitializeComponent();
 
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
-            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+            this.navigationHelper.SaveState += this.NavigationHelper_SaveState;              
         }
 
         /// <summary>
@@ -102,28 +107,42 @@ namespace Remind.Me
             this.navigationHelper.OnNavigatedTo(e);
 
             // already has saved position
-            if (false /*Check to see if the file exists*/)
+            if (_settings == null)
             {
-                /*var myPosition = new Windows.Devices.Geolocation.BasicGeoposition();
-                myPosition.Latitude = 
-                myPosition.Longitude = 
-                 
-                 var myPoint = new Windows.Devices.Geolocation.Geopoint(myPosition);
-                 if (await MyMap.TrySetViewAsync(myPoint, 10D))
-                 {
-                 
-                 }*/
+                await LoadSettings();
             }
             else
             {
+                var position = new Windows.Devices.Geolocation.BasicGeoposition();
+                position.Latitude = _settings.Latitude;
+                position.Longitude = _settings.Longitude;
+
+                var point = new Windows.Devices.Geolocation.Geopoint(position);
+
+                await SettingsMap.TrySetViewAsync(point, 16D);           
+            }
+        }
+
+        private async System.Threading.Tasks.Task LoadSettings()
+        {
+            var fileContent = Main.Main.GetSettings().Result;
+
+            // if there is a saved setting load it 
+            if (fileContent != null)
+            {
+                _settings = JsonConvert.DeserializeObject<SettingsFile>(fileContent);
+            }
+            else // get the postion from the GPS
+            {
                 var locator = new Geolocator();
                 locator.DesiredAccuracyInMeters = 50;
-            
+
                 var position = await locator.GetGeopositionAsync();
 
-                await SettingsMap.TrySetViewAsync(position.Coordinate.Point, 18D);
+                await SettingsMap.TrySetViewAsync(position.Coordinate.Point, 16D);
             }
 
+            mapZoomSlider.Value = SettingsMap.ZoomLevel;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -135,17 +154,34 @@ namespace Remind.Me
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            var position = String.Format("{0}, {1}", SettingsMap.Center.Position.Latitude, 
-                                                        SettingsMap.Center.Position.Longitude);
-            var d = Distance.SelectedValue;
+            _settings = new SettingsFile(RemoveTheUnit(((ComboBoxItem)Distance.SelectedItem).Content.ToString()), 
+                                        SettingsMap.Center.Position.Latitude, 
+                                        SettingsMap.Center.Position.Longitude);
 
-             // Main.SAlvar settings
+
+            var serialized = JsonConvert.SerializeObject(_settings);
+
+            Main.Main.SaveSettings(serialized);
+
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private double RemoveTheUnit(string v)
+        {
+            var idx = v.IndexOf(' ');
+
+            return Convert.ToDouble(v.Substring(0, idx));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(MainPage));
+        }
+
+        private void mapZoom_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (SettingsMap != null)
+                SettingsMap.ZoomLevel = e.NewValue;
         }
     }
 }

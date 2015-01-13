@@ -50,7 +50,7 @@
                 <TextBlock  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
                 	<Run Text="Localização da sua casa:"/>
                 </TextBlock>
-                <Maps:MapControl Name="SettingsMap" Height="336" Margin="0,0,-0.333,0"/>
+                <Maps:MapControl Name="SettingsMap" Height="296" Margin="0,0,-0.333,0"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -59,7 +59,7 @@
                     <Button Grid.Column="0" Margin="0,0,10,0" Content="Salvar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Save_Click"/>
                     <Button Grid.Column="1" Margin="10,0,0,0" Content="Cancelar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="Cancel_Click"/>
                 </Grid>
-                
+                <Slider Name="mapZoomSlider" Maximum="20" Minimum="10"  ValueChanged="mapZoom_ValueChanged"/>
             </StackPanel>
         </Grid>
     </Grid>
