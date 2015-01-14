@@ -88,7 +88,6 @@
     <Compile Include="..\Remind.Me\Todo.cs">
       <Link>Todo.cs</Link>
     </Compile>
-    <Compile Include="Database\Access.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
