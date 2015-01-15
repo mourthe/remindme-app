@@ -34,7 +34,7 @@ namespace Remind.Me.Database
             var todo = await _db.Conn.Table<Todo>().Where(t => t.Title == newTodo.Title).FirstOrDefaultAsync();
             if (todo != null)
             {
-                _db.Conn.Add(newTodo);
+                _db.Conn.InsertAsync(newTodo);
             }
         }
 

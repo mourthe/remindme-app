@@ -8,34 +8,51 @@ using Windows.Storage;
 
 namespace Remind.Me.Database
 {
-    public static class Main 
+    public class Main 
     {
         private static string _fileName = "settings.txt";
         private static string _folderName = "DataFolder";
 
-        public static void SaveTodo(Todo t)
-        {
+        private static Helper _helper;
 
+        private static TodoDataSource _todoDs;
+        private static ReminderDataSource _reminderDs;
+
+        static Main()
+        {
+            _helper = new Helper();
+            _todoDs = new TodoDataSource(_helper);
+            _reminderDs = new ReminderDataSource(_helper);
         }
 
-        public static void SaveReminder(Reminder t)
+        public static async void InitializeDatabase()
         {
+            _helper.InitDb();
+        }
 
+        public static void SaveTodo(Todo t)
+        {
+            _todoDs.AddTodo(t);
+        }
+
+        public static void SaveReminder(Reminder r)
+        {
+            _reminderDs.AddReminder(r);
         }
 
         public static void UpdateTodo(Todo old, Todo newT)
         {
-
+            _todoDs.UpdateTodo(old, newT);
         }
 
         public static void UpdateReminder(Reminder old, Reminder newR)
         {
-
+            
         }
 
         public static void RemoveTodo(Todo t)
         {
-
+            _todoDs.RemoveTodo(t.Title);
         }
 
         public static void RemoveReminder(Reminder t)
