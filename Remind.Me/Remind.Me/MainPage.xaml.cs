@@ -130,7 +130,18 @@ namespace Remind.Me
         
         private void TodoEdit_Click(object sender, RoutedEventArgs e)
         {
+            // get the index of the TODO
+            var idx = -1;
+            for (int i = 0; i < this.todos.Count; i++)
+            {
+                if (this.todos.ElementAt(i).Title.Equals((lvtodos.SelectedItems[0] as Todo).Title))
+                {
+                    idx = i; break;
+                }
+            }
 
+            Frame.Navigate(typeof(AddTodoPage), this.todos.ElementAt(idx));
+            this.todos.RemoveAt(idx);
         }
         #endregion
 
@@ -167,7 +178,18 @@ namespace Remind.Me
 
         private void EditReminder_Click(object sender, RoutedEventArgs e)
         {
+            // get the index of the TODO
+            var idx = -1;
+            for (int i = 0; i < this.reminders.Count; i++)
+            {
+                if (this.reminders.ElementAt(i).Title.Equals((lvreminders.SelectedItems[0] as Reminder).Title))
+                {
+                    idx = i; break;
+                }
+            }
 
+            Frame.Navigate(typeof(AddReminderPage), this.reminders.ElementAt(idx));
+            this.reminders.RemoveAt(idx);
         }
 
         private void reminderToggle_Toggled(object sender, RoutedEventArgs e)
