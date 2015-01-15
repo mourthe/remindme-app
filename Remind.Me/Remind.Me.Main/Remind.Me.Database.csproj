@@ -9,7 +9,7 @@
     <ProjectGuid>{D6677B26-CB45-4F15-8689-5D0E308DE721}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Remind.Me.Main</RootNamespace>
+    <RootNamespace>Remind.Me.Database</RootNamespace>
     <AssemblyName>Remind.Me.Main</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
@@ -93,9 +93,11 @@
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reminder.cs" />
+    <Compile Include="ReminderDataSource.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="Todo.cs" />
+    <Compile Include="TodoDataSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
