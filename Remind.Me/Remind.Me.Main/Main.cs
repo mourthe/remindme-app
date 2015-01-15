@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 
-namespace Remind.Me.Main
+namespace Remind.Me.Database
 {
     public static class Main 
     {

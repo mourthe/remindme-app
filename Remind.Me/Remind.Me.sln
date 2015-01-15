@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remind.Me", "Remind.Me\Remind.Me.csproj", "{5EAB9F59-50E9-4F50-B161-6B4052F5AAE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remind.Me.Main", "Remind.Me.Main\Remind.Me.Main.csproj", "{D6677B26-CB45-4F15-8689-5D0E308DE721}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remind.Me.Database", "Remind.Me.Main\Remind.Me.Database.csproj", "{D6677B26-CB45-4F15-8689-5D0E308DE721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

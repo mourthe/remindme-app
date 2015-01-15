@@ -124,7 +124,7 @@ namespace Remind.Me
 
         private async System.Threading.Tasks.Task LoadSettings()
         {
-            var fileContent = Main.Main.GetSettings().Result;
+            var fileContent = Database.Main.GetSettings().Result;
 
             // if there is a saved setting load it 
             if (fileContent != null)
@@ -160,7 +160,7 @@ namespace Remind.Me
 
             var serialized = JsonConvert.SerializeObject(_settings);
 
-            Main.Main.SaveSettings(serialized);
+            Database.Main.SaveSettings(serialized);
 
             Frame.Navigate(typeof(MainPage));
         }

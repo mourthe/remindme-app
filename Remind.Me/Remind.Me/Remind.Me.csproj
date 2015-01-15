@@ -147,9 +147,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Remind.Me.Main\Remind.Me.Main.csproj">
+    <ProjectReference Include="..\Remind.Me.Main\Remind.Me.Database.csproj">
       <Project>{d6677b26-cb45-4f15-8689-5d0e308de721}</Project>
-      <Name>Remind.Me.Main</Name>
+      <Name>Remind.Me.Database</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
