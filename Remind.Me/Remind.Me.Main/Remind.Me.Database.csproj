@@ -89,16 +89,13 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Remind.Me\Reminder.cs">
-      <Link>Reminder.cs</Link>
-    </Compile>
-    <Compile Include="..\Remind.Me\Todo.cs">
-      <Link>Todo.cs</Link>
-    </Compile>
+    <Compile Include="Helper.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reminder.cs" />
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
+    <Compile Include="Todo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

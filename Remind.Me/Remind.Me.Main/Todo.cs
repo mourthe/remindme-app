@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Remind.Me
+using SQLite;
+
+namespace Remind.Me.Database
 {
     public class Todo
     {
+        [PrimaryKey]
         public string Title { get; private set; }
         public string Details { get; private set; }
         public bool Checked { get; private set; }
@@ -17,6 +20,13 @@ namespace Remind.Me
             this.Title = title;
             this.Details = details;
             this.Checked = false;
+        }
+
+        /// <summary>
+        /// Database use-only!
+        /// </summary>
+        public Todo()
+        {
         }
     }
 }

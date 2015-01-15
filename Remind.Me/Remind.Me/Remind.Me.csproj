@@ -79,6 +79,12 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\Remind.Me.Main\Reminder.cs">
+      <Link>Reminder.cs</Link>
+    </Compile>
+    <Compile Include="..\Remind.Me.Main\Todo.cs">
+      <Link>Todo.cs</Link>
+    </Compile>
     <Compile Include="AddReminderPage.xaml.cs">
       <DependentUpon>AddReminderPage.xaml</DependentUpon>
     </Compile>
@@ -96,12 +102,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reminder.cs" />
     <Compile Include="SettingsFile.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Todo.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

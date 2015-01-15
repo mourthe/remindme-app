@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Remind.Me
+using SQLite;
+
+namespace Remind.Me.Database
 {
     public class Reminder
     {
+        [PrimaryKey]
         public string Title { get; private set; }
         public string Details { get; private set; }
         public string Local { get; private set; }
@@ -19,6 +22,13 @@ namespace Remind.Me
             this.Details = details;
             this.Local = local;
             this.Active = true;
+        }
+
+        /// <summary>
+        /// Database use-only!
+        /// </summary>
+        public Reminder()
+        {
         }
     }
 }
