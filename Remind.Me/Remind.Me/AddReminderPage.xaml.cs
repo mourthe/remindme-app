@@ -21,11 +21,22 @@ namespace Remind.Me
     /// </summary>
     public sealed partial class AddReminderPage : Page
     {
+        private bool _edit;
+        private Reminder _oldReminder;
+        private Dictionary<string, int> _cmbb;
+
         public AddReminderPage()
         {
             this.InitializeComponent();
 
-            reminderDetailsTextBox.Focus(FocusState.Keyboard);
+            this._edit = false;
+            this._oldReminder = null;
+
+            this._cmbb = new Dictionary<string, int>();
+            this._cmbb.Add("Banco", 0);
+            this._cmbb.Add("Farmácia", 1);
+            this._cmbb.Add("Supermercado", 2);
+            this._cmbb.Add("Casa", 3);
         }
 
         /// <summary>
@@ -35,10 +46,25 @@ namespace Remind.Me
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            if (e.Parameter != null)
+            {
+                this._edit = true;
+                this._oldReminder = (Reminder)e.Parameter;
+
+                reminderComboBox.SelectedIndex = this._cmbb[this._oldReminder.Local];
+                reminderNameTextBox.Text = this._oldReminder.Title;
+                reminderDetailsTextBox.Text = this._oldReminder.Details;
+            }
         }
 
         private void CancelBarButton_Click(object sender, RoutedEventArgs e)
         {
+            if (this._edit)
+            {
+                Frame.Navigate(typeof(MainPage), this._oldReminder);
+            }
+
+            this._edit = false;
             Frame.Navigate(typeof(MainPage), null); 
         }
 
@@ -46,7 +72,7 @@ namespace Remind.Me
         {
             var reminder = new Reminder(reminderNameTextBox.Text,
                                               reminderDetailsTextBox.Text, 
-                                              ((ComboBoxItem)myComboBox.SelectedItem).Content.ToString());
+                                              ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString());
             
             Frame.Navigate(typeof(MainPage), reminder);
         }

@@ -14,7 +14,7 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid>
+    <Grid Name="root">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
@@ -25,7 +25,7 @@
             <TextBlock HorizontalAlignment="Left" Text="Title" FontSize="24" />
             <TextBox Name="todoNameTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
             <TextBlock HorizontalAlignment="Left" Text="Details" FontSize="24"/>
-            <TextBox Name="todoDetailsTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
+            <TextBox Name="todoDetailsTextBox" HorizontalAlignment="Left" AcceptsReturn="True" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
         </StackPanel>
     </Grid>
 </Page>

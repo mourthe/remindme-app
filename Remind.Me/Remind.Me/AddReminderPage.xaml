@@ -21,18 +21,17 @@
         </Grid.RowDefinitions>
         <TextBlock Margin="20,0,20,0" Grid.Row="0" Style="{StaticResource TitleTextBlockStyle}">REMINDER</TextBlock>
         <StackPanel Name="reminderStackPanel" Grid.Row="1" Margin="20,0,0,0">
-            <TextBlock HorizontalAlignment="Left" Text="Title" FontSize="24"/>
+            <TextBlock HorizontalAlignment="Left" Text="Título" FontSize="24"/>
             <TextBox Name="reminderNameTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
-            <ComboBox x:Name="myComboBox" HorizontalAlignment="Left" Margin="0,14.5,0,0" Width="140">
-                <ComboBoxItem Content="Local" IsSelected="true"/>
+            <ComboBox x:Name="reminderComboBox" HorizontalAlignment="Left" Margin="0,15,0,10" Width="200">
+                <ComboBoxItem Content="Local" IsSelected="True"/>
                 <ComboBoxItem Content="Banco"/>
-                <ComboBoxItem Content="Bar"/>
                 <ComboBoxItem Content="Farmácia"/>
                 <ComboBoxItem Content="Supermercado"/>
                 <ComboBoxItem Content="Casa"/>
             </ComboBox>
-            <TextBlock HorizontalAlignment="Left" Text="Details" FontSize="24"/>
-            <TextBox Name="reminderDetailsTextBox" HorizontalAlignment="Left" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
+            <TextBlock HorizontalAlignment="Left" Text="Detalhes" FontSize="24"/>
+            <TextBox Name="reminderDetailsTextBox" AcceptsReturn="True" HorizontalAlignment="Left" TextAlignment="Left" Width="370" Height="200" TextWrapping="NoWrap" InputScope="AlphanumericFullWidth" FontSize="24"/>
         </StackPanel>
     </Grid>
 </Page>
