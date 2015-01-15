@@ -10,9 +10,9 @@ namespace Remind.Me.Database
     {
         private Helper _db;
 
-        public ReminderDataSource()
+        public ReminderDataSource(Helper databaseHelper)
         {
-            this._db = new Helper();
+            this._db = databaseHelper;
         }
 
         public async void AddReminder(Reminder reminder)

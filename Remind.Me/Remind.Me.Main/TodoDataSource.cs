@@ -29,12 +29,12 @@ namespace Remind.Me.Database
             }
         }
 
-        public async void UpdateTodo(Todo newTodo)
+        public async void UpdateTodo(Todo old, Todo newTodo)
         {
             var todo = await _db.Conn.Table<Todo>().Where(t => t.Title == newTodo.Title).FirstOrDefaultAsync();
             if (todo != null)
             {
-                _db.Conn.UpdateAsync(newTodo);
+                _db.Conn.Add(newTodo);
             }
         }
 
