@@ -50,7 +50,12 @@ namespace Remind.Me.Database
 
         private async Task CreateDatabaseAsync()
         {
-            await Conn.CreateTableAsync<Reminder>();
+            Type[] tablesType = new Type[2];
+
+            tablesType[0] = typeof(Todo);
+            tablesType[1] = typeof(Reminder);
+
+            await Conn.CreateTablesAsync(tablesType);
         }
     }
 }
