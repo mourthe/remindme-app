@@ -45,7 +45,8 @@
                                                     <MenuFlyoutItem Text="Edit" Click="EditReminder_Click"/>
                                                 </MenuFlyout>
                                             </FlyoutBase.AttachedFlyout>
-                                            <TextBlock x:Name="ReminderName" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">
+                                            <TextBlock x:Name="ReminderName" Grid.Column="0" Style="{StaticResource SubheaderTextBlockStyle}" 
+                                                       HorizontalAlignment="Left">
                                                <Run Text="{Binding Title}"/>
                                             </TextBlock>
                                         </StackPanel>
@@ -80,6 +81,7 @@
                                     <StackPanel x:Name="TodoItemRoot" Grid.Column="0" Holding="ListViewItem_Holding">
                                         <FlyoutBase.AttachedFlyout>
                                             <MenuFlyout>
+                                                <MenuFlyoutItem Text="Details"  Click="TodoEdit_Click"/>
                                                 <MenuFlyoutItem Text="Delete"  Click="TodoCheckBox_Click"/>
                                                 <MenuFlyoutItem Text="Edit" Click="TodoEdit_Click"/>
                                             </MenuFlyout>

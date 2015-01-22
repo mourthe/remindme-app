@@ -22,7 +22,8 @@ namespace Remind.Me.Database
 
         public async void RemoveTodo(string title)
         {
-            var todo = await _db.Conn.Table<Todo>().Where(t => t.Title == title).FirstOrDefaultAsync();
+            var todo = await _db.Conn.Table<Todo>().
+                    Where(t => t.Title == title).FirstOrDefaultAsync();
             if (todo != null)
             {
                 await _db.Conn.DeleteAsync(todo);
@@ -31,10 +32,11 @@ namespace Remind.Me.Database
 
         public async void UpdateTodo(Todo old, Todo newTodo)
         {
-            var todo = await _db.Conn.Table<Todo>().Where(t => t.Title == newTodo.Title).FirstOrDefaultAsync();
+            var todo = await _db.Conn.Table<Todo>().Where
+                (t => t.Title == newTodo.Title).FirstOrDefaultAsync();
             if (todo != null)
             {
-                _db.Conn.InsertAsync(newTodo);
+                _db.Conn.UpdateAsync(newTodo);
             }
         }
 
