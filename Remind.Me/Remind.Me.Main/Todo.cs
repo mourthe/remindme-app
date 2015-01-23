@@ -11,12 +11,14 @@ namespace Remind.Me.Database
     public class Todo
     {
         [PrimaryKey]
-        public string Title { get; private set; }
-        public string Details { get; private set; }
-        public bool Checked { get; private set; }
+        public string Id { get; private set; }
+        public string Title { get; set; }
+        public string Details { get; set; }
+        public bool Checked { get; set; }
 
         public Todo(string title, string details)
         {
+            this.Id = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff"); 
             this.Title = title;
             this.Details = details;
             this.Checked = false;

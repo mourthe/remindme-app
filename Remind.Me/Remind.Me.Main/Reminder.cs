@@ -12,9 +12,9 @@ namespace Remind.Me.Database
     {
         [PrimaryKey]
         public string Id { get; private set; }
-        public string Title { get; private set; }
-        public string Details { get; private set; }
-        public string Local { get; private set; }
+        public string Title { get; set; }
+        public string Details { get; set; }
+        public string Local { get; set; }
         public bool Active { get; set; }
 
         public Reminder(string title, string details, string local)

@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 using Todo = Remind.Me.Database.Todo;
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace Remind.Me
@@ -21,16 +22,12 @@ namespace Remind.Me
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddTodoPage : Page
+    public sealed partial class TodoDetails : Page
     {
-        private bool _edit;
-        private Todo _oldTodo;
+        private Todo _todo;
 
-        public AddTodoPage()
-        {            
-            this._edit = false;
-            this._oldTodo = null;
-
+        public TodoDetails()
+        {
             this.InitializeComponent();
         }
 
@@ -41,42 +38,20 @@ namespace Remind.Me
         /// This parameter is typically used to configure the page.</param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter != null)
-            {
-                this._edit = true;
-                this._oldTodo = (Todo)e.Parameter;
+            this._todo = (Todo)e.Parameter;
 
-                todoNameTextBox.Text = _oldTodo.Title;
-                todoDetailsTextBox.Text = _oldTodo.Details;
-            }
+            todoNameTextBox.Text = _todo.Title;
+            todoDetailsTextBox.Text = _todo.Details;
         }
 
-        private void CancelBarButton_Click(object sender, RoutedEventArgs e)
+        private void BackBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this._edit)
-            {
-                Frame.Navigate(typeof(MainPage), _oldTodo);
-            }
-
-            this._edit = false;
             Frame.Navigate(typeof(MainPage), null);
         }
 
-        private void SaveBarButton_Click(object sender, RoutedEventArgs e)
+        private void EditBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_edit)
-            {
-                _oldTodo.Title = todoNameTextBox.Text;
-                _oldTodo.Details = todoDetailsTextBox.Text;
-
-                Frame.Navigate(typeof(MainPage), _oldTodo);
-            }
-            else
-            {
-                var newTodo = new Todo(todoNameTextBox.Text, todoDetailsTextBox.Text);
-
-                Frame.Navigate(typeof(MainPage), newTodo);
-            }
+            Frame.Navigate(typeof(AddTodoPage), this._todo);
         }
     }
 }

@@ -70,11 +70,22 @@ namespace Remind.Me
 
         private void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-            var reminder = new Reminder(reminderNameTextBox.Text,
-                                              reminderDetailsTextBox.Text, 
-                                              ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString());
-            
-            Frame.Navigate(typeof(MainPage), reminder);
+            if (!this._edit)
+            {
+                var reminder = new Reminder(reminderNameTextBox.Text,
+                                  reminderDetailsTextBox.Text,
+                                  ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString());
+
+                Frame.Navigate(typeof(MainPage), reminder);
+            }
+            else
+            {
+                this._oldReminder.Title = reminderNameTextBox.Text;
+                this._oldReminder.Details = reminderDetailsTextBox.Text;
+                this._oldReminder.Local = ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString();
+
+                Frame.Navigate(typeof(MainPage), this._oldReminder);
+            }
         }
     }
 }
