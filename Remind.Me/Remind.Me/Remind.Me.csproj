@@ -157,14 +157,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Remind.Me.Main\Remind.Me.Database.csproj">
       <Project>{d6677b26-cb45-4f15-8689-5d0e308de721}</Project>
       <Name>Remind.Me.Database</Name>
