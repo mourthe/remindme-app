@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -62,20 +63,28 @@ namespace Remind.Me
             Frame.Navigate(typeof(MainPage), null);
         }
 
-        private void SaveBarButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_edit)
+            if (todoNameTextBox.Text == string.Empty)
             {
-                _oldTodo.Title = todoNameTextBox.Text;
-                _oldTodo.Details = todoDetailsTextBox.Text;
-
-                Frame.Navigate(typeof(MainPage), _oldTodo);
+                var msgbox = new MessageDialog("Titulo não pode ser vazio.");
+                await msgbox.ShowAsync();
             }
             else
             {
-                var newTodo = new Todo(todoNameTextBox.Text, todoDetailsTextBox.Text);
+                if (_edit)
+                {
+                    _oldTodo.Title = todoNameTextBox.Text;
+                    _oldTodo.Details = todoDetailsTextBox.Text;
 
-                Frame.Navigate(typeof(MainPage), newTodo);
+                    Frame.Navigate(typeof(MainPage), _oldTodo);
+                }
+                else
+                {
+                    var newTodo = new Todo(todoNameTextBox.Text, todoDetailsTextBox.Text);
+
+                    Frame.Navigate(typeof(MainPage), newTodo);
+                }
             }
         }
     }

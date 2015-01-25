@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -70,21 +71,29 @@ namespace Remind.Me
 
         private void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!this._edit)
+            if (reminderNameTextBox.Text == string.Empty)
             {
-                var reminder = new Reminder(reminderNameTextBox.Text,
-                                  reminderDetailsTextBox.Text,
-                                  ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString());
-
-                Frame.Navigate(typeof(MainPage), reminder);
+                var msgbox = new MessageDialog("Titulo não pode ser vazio.");
+                await msgbox.ShowAsync();
             }
             else
             {
-                this._oldReminder.Title = reminderNameTextBox.Text;
-                this._oldReminder.Details = reminderDetailsTextBox.Text;
-                this._oldReminder.Local = ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString();
+                if (!this._edit)
+                {
+                    var reminder = new Reminder(reminderNameTextBox.Text,
+                                      reminderDetailsTextBox.Text,
+                                      ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString());
 
-                Frame.Navigate(typeof(MainPage), this._oldReminder);
+                    Frame.Navigate(typeof(MainPage), reminder);
+                }
+                else
+                {
+                    this._oldReminder.Title = reminderNameTextBox.Text;
+                    this._oldReminder.Details = reminderDetailsTextBox.Text;
+                    this._oldReminder.Local = ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString();
+
+                    Frame.Navigate(typeof(MainPage), this._oldReminder);
+                }
             }
         }
     }
