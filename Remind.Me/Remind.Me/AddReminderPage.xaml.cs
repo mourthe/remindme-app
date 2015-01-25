@@ -69,7 +69,7 @@ namespace Remind.Me
             Frame.Navigate(typeof(MainPage), null); 
         }
 
-        private void SaveBarButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
             if (reminderNameTextBox.Text == string.Empty)
             {
