@@ -60,6 +60,16 @@ namespace Remind.Me.Database
             _reminderDs.RemoveReminder(Id);
         }
 
+        public static Task<List<Todo>> FetchAllTodos()
+        {
+            return _todoDs.FetchAllTodos();
+        }
+
+        public static Task<List<Reminder>> FetchAllReminders()
+        {
+            return _reminderDs.FetchAllReminders();
+        }
+
         public static async Task<int> SaveSettings(string settings)
         {
             // Get the text data from the textbox. 

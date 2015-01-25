@@ -40,7 +40,9 @@ namespace Remind.Me.Database
 
         public async Task<List<Reminder>> FetchAllReminders()
         {
-            return await _db.Conn.Table<Reminder>().ToListAsync();
+            var content = _db.Conn.Table<Reminder>().ToListAsync().Result;
+
+            return content;
         }
     }
 }

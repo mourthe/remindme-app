@@ -37,21 +37,45 @@ namespace Remind.Me
 
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
-            this.reminders = new ObservableCollection<Reminder>();
+            this.LoadCollections();
+
+
+        }
+
+        private void LoadCollections()
+        {
+            // try to load the todos
+            var tds = Database.Main.FetchAllTodos().Result;
+            if (tds.Count == 0)
+                this.todos = new ObservableCollection<Todo>();
+            else
+                this.todos = new ObservableCollection<Todo>(tds);
+            
+            // try to load the reminders
+            var rmdrs = Database.Main.FetchAllReminders().Result;
+            if (rmdrs.Count == 0)
+                this.reminders = new ObservableCollection<Reminder>();
+            else
+                this.reminders = new ObservableCollection<Reminder>(rmdrs);
+
+            // creates the dictionaries
             this.remindersDic = new Dictionary<string, Reminder>();
-            this.todos = new ObservableCollection<Todo>();
             this.todoDic = new Dictionary<string, Todo>();
+            
+            // populates the dictionaries
+            if (this.todos.Count > 0)
+                foreach (var t in this.todos)
+                    this.todoDic.Add(t.Id, t);
+                
+            if (this.reminders.Count > 0)
+                foreach (var r in this.reminders)
+                    this.remindersDic.Add(r.Id, r);
+
+            reminderXAML.Source = this.reminders;
+            todoXAML.Source = this.todos;
         }
 
-        public void RemoveFromTodoList(string id)
-        {
-            this.todos.RemoveAt(this.GetTodoIdx(id));
-        }
-
-        public void RemoveFromReminderList(string id)
-        {
-            this.reminders.RemoveAt(this.GetReminderIdx(id));
-        }
+        #region Navigation
 
         /// <summary>
         /// Invoked when this page is about to be displayed in a Frame.
@@ -67,7 +91,6 @@ namespace Remind.Me
 
                 if (!this.remindersDic.ContainsKey(r.Id))
                 {
-                    // Add on the base
                     this.remindersDic.Add(r.Id, r);
                     Database.Main.SaveReminder(r);
                 }
@@ -99,7 +122,21 @@ namespace Remind.Me
 
                 todoXAML.Source = this.todos;
             }
-        }       
+        }
+
+        private bool CameFromAddRemindersPage()
+        {
+            return Frame.BackStack.FirstOrDefault() != null &&
+                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddReminderPage";
+        }
+
+        private bool CameFromAddTodoPage()
+        {
+            return Frame.BackStack.FirstOrDefault() != null &&
+                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddTodoPage";
+        }
+
+        #endregion
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {            
@@ -118,18 +155,6 @@ namespace Remind.Me
         private void configuracoes_Click(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(SettingsPage));
-        }
-
-        private bool CameFromAddRemindersPage()
-        {
-            return Frame.BackStack.FirstOrDefault() != null &&
-                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddReminderPage";
-        }
-
-        private bool CameFromAddTodoPage()
-        {
-            return Frame.BackStack.FirstOrDefault() != null &&
-                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.AddTodoPage";
         }
 
         #region TODO

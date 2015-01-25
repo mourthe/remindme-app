@@ -40,7 +40,9 @@ namespace Remind.Me.Database
 
         public async Task<List<Todo>> FetchAllTodos()
         {
-            return await _db.Conn.Table<Todo>().ToListAsync();
+            var content = _db.Conn.Table<Todo>().ToListAsync().Result;
+
+            return content;
         }
     }
 }
