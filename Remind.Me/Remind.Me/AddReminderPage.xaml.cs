@@ -71,9 +71,9 @@ namespace Remind.Me
 
         private async void SaveBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (reminderNameTextBox.Text == string.Empty)
+            if (reminderNameTextBox.Text == string.Empty || ((ComboBoxItem)reminderComboBox.SelectedItem).Content.ToString() == "Local")
             {
-                var msgbox = new MessageDialog("Titulo não pode ser vazio.");
+                var msgbox = new MessageDialog("Titulo não pode ser vazio e um local deve ser escolhido.");
                 await msgbox.ShowAsync();
             }
             else
