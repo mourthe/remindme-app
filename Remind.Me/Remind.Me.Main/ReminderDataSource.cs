@@ -15,9 +15,9 @@ namespace Remind.Me.Database
             this._db = databaseHelper;
         }
 
-        public async void AddReminder(Reminder reminder)
+        public async void AddReminder(Reminder r)
         {
-            await _db.Conn.InsertAsync(reminder);
+            await _db.Conn.InsertAsync(r);
         }
 
         public async void RemoveReminder(string id)
@@ -29,12 +29,12 @@ namespace Remind.Me.Database
             }
         }
 
-        public async void UpdateReminder(Reminder newReminder)
+        public async void UpdateReminder(Reminder r)
         {
-            var Reminder = await _db.Conn.Table<Reminder>().Where(t => t.Id == newReminder.Id).FirstOrDefaultAsync();
+            var Reminder = await _db.Conn.Table<Reminder>().Where(t => t.Id == r.Id).FirstOrDefaultAsync();
             if (Reminder != null)
             {
-                _db.Conn.UpdateAsync(newReminder);
+                _db.Conn.UpdateAsync(r);
             }
         }
 

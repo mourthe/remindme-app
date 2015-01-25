@@ -20,23 +20,21 @@ namespace Remind.Me.Database
             await _db.Conn.InsertAsync(todo);
         }
 
-        public async void RemoveTodo(string title)
+        public async void RemoveTodo(string id)
         {
-            var todo = await _db.Conn.Table<Todo>().
-                    Where(t => t.Title == title).FirstOrDefaultAsync();
+            var todo = await _db.Conn.Table<Todo>().Where(t => t.Id == id).FirstOrDefaultAsync();
             if (todo != null)
             {
                 await _db.Conn.DeleteAsync(todo);
             }
         }
 
-        public async void UpdateTodo(Todo old, Todo newTodo)
+        public async void UpdateTodo(Todo td)
         {
-            var todo = await _db.Conn.Table<Todo>().Where
-                (t => t.Title == newTodo.Title).FirstOrDefaultAsync();
+            var todo = await _db.Conn.Table<Todo>().Where(t => t.Id == td.Id).FirstOrDefaultAsync();
             if (todo != null)
             {
-                _db.Conn.UpdateAsync(newTodo);
+                _db.Conn.UpdateAsync(td);
             }
         }
 
