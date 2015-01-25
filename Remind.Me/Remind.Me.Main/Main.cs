@@ -50,14 +50,14 @@ namespace Remind.Me.Database
             _reminderDs.UpdateReminder(r);
         }
 
-        public static void RemoveTodo(Todo t)
+        public static void RemoveTodo(string Id)
         {
-            _todoDs.RemoveTodo(t.Id);
+            _todoDs.RemoveTodo(Id);
         }
 
-        public static void RemoveReminder(Reminder r)
+        public static void RemoveReminder(string Id)
         {
-            _reminderDs.RemoveReminder(r.Id);
+            _reminderDs.RemoveReminder(Id);
         }
 
         public static async Task<int> SaveSettings(string settings)

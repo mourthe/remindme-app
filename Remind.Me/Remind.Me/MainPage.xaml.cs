@@ -66,7 +66,15 @@ namespace Remind.Me
                 var r = (Reminder)e.Parameter;
 
                 if (!this.remindersDic.ContainsKey(r.Id))
+                {
+                    // Add on the base
                     this.remindersDic.Add(r.Id, r);
+                    Database.Main.SaveReminder(r);
+                }
+                else
+                {
+                    Database.Main.UpdateReminder(r);
+                }
 
                 this.reminders = new ObservableCollection<Reminder>(this.remindersDic.Values.ToList());
 
@@ -78,18 +86,19 @@ namespace Remind.Me
                 var t = (Todo)e.Parameter;
 
                 if (!this.todoDic.ContainsKey(t.Id))
+                {
                     this.todoDic.Add(t.Id, t);
+                    Database.Main.SaveTodo(t);
+                }
+                else
+                {
+                    Database.Main.UpdateTodo(t);
+                }
 
                 this.todos = new ObservableCollection<Todo>(this.todoDic.Values.ToList());
 
                 todoXAML.Source = this.todos;
             }
-
-            // TODO: If your application contains multiple pages, ensure that you are
-            // handling the hardware Back button by registering for the
-            // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
-            // If you are using the NavigationHelper provided by some templates,
-            // this event is handled for you.
         }       
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
@@ -124,13 +133,17 @@ namespace Remind.Me
         }
 
         #region TODO
+
         private void TodoCheckBox_Click(object sender, RoutedEventArgs e)
         {
             // delete the checked todo
             var idx = GetTodoIdx();
 
-            // remove from the database
-            this.todoDic.Remove(this.todos.ElementAt(idx).Id);
+            // remove from the database and lists
+            var current = this.todos.ElementAt(idx);
+
+            this.todoDic.Remove(current.Id);
+            Database.Main.RemoveTodo(current.Id);
             this.todos.RemoveAt(idx);
 
         }
@@ -199,7 +212,10 @@ namespace Remind.Me
             var idx = GetReminderIdx();
 
             // remove from the database
-            this.remindersDic.Remove(this.reminders.ElementAt(idx).Id);
+            var current = this.reminders.ElementAt(idx);
+
+            Database.Main.RemoveReminder(current.Id);
+            this.remindersDic.Remove(current.Id);
             this.reminders.RemoveAt(idx);
         }
 

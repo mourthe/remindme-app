@@ -79,12 +79,6 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Remind.Me.Main\Reminder.cs">
-      <Link>Reminder.cs</Link>
-    </Compile>
-    <Compile Include="..\Remind.Me.Main\Todo.cs">
-      <Link>Todo.cs</Link>
-    </Compile>
     <Compile Include="AddReminderPage.xaml.cs">
       <DependentUpon>AddReminderPage.xaml</DependentUpon>
     </Compile>
