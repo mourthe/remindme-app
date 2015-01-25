@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
-using Remind.Me.Common;
+﻿using Remind.Me.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
@@ -105,20 +106,14 @@ namespace Remind.Me
         {
             this.navigationHelper.OnNavigatedTo(e);
 
-            // already has saved position
+            // not loaded, try to load
             if (_settings == null)
             {
                 await LoadSettings();
             }
             else
             {
-                var position = new Windows.Devices.Geolocation.BasicGeoposition();
-                position.Latitude = _settings.Latitude;
-                position.Longitude = _settings.Longitude;
-
-                var point = new Windows.Devices.Geolocation.Geopoint(position);
-
-                await SettingsMap.TrySetViewAsync(point, 16D);           
+                await SetupMap();    
             }
         }
 
@@ -129,7 +124,11 @@ namespace Remind.Me
             // if there is a saved setting load it 
             if (fileContent != null)
             {
-                _settings = JsonConvert.DeserializeObject<SettingsFile>(fileContent);
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(fileContent)); 
+                var ser = new DataContractJsonSerializer(typeof(SettingsFile));
+
+                _settings = (SettingsFile) ser.ReadObject(stream);
+                await SetupMap();          
             }
             else // get the postion from the GPS
             {
@@ -142,6 +141,17 @@ namespace Remind.Me
             }
 
             mapZoomSlider.Value = SettingsMap.ZoomLevel;
+        }
+
+        private async System.Threading.Tasks.Task SetupMap()
+        {
+            var position = new Windows.Devices.Geolocation.BasicGeoposition();
+            position.Latitude = _settings.Latitude;
+            position.Longitude = _settings.Longitude;
+
+            var point = new Windows.Devices.Geolocation.Geopoint(position);
+
+            await SettingsMap.TrySetViewAsync(point, 16D);
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -157,8 +167,13 @@ namespace Remind.Me
                                         SettingsMap.Center.Position.Latitude, 
                                         SettingsMap.Center.Position.Longitude);
 
+            var stream = new MemoryStream(); 
+            var ser = new DataContractJsonSerializer(typeof(SettingsFile));
+            
+            ser.WriteObject(stream, _settings);
 
-            var serialized = JsonConvert.SerializeObject(_settings);
+            stream.Position = 0;
+            var serialized = new StreamReader(stream).ReadToEnd();
 
             Database.Main.SaveSettings(serialized);
 
