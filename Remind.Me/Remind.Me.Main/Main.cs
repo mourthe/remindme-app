@@ -10,7 +10,7 @@ namespace Remind.Me.Database
 {
     public class Main 
     {
-        private static string _fileName = "settings.txt";
+        private static string _fileName = "settings.json";
         private static string _folderName = "DataFolder";
 
         private static Helper _helper;
