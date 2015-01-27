@@ -292,8 +292,9 @@ namespace Remind.Me
             {
                 var idx = GetReminderIdx();
 
-                // update on the data database
-                this.reminders.ElementAt(idx).Active = (sender as ToggleSwitch).IsOn;
+                var r = this.reminders.ElementAt(idx);
+                r.Active = (sender as ToggleSwitch).IsOn;
+                Database.Main.UpdateReminder(r);
             }
         }
         
