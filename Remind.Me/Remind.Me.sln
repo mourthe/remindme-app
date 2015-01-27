@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remind.Me", "Remind.Me\Remi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Remind.Me.Database", "Remind.Me.Main\Remind.Me.Database.csproj", "{D6677B26-CB45-4F15-8689-5D0E308DE721}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskBackground", "TaskBackground\TaskBackground.csproj", "{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,18 @@ Global
 		{D6677B26-CB45-4F15-8689-5D0E308DE721}.Release|ARM.Build.0 = Release|ARM
 		{D6677B26-CB45-4F15-8689-5D0E308DE721}.Release|x86.ActiveCfg = Release|x86
 		{D6677B26-CB45-4F15-8689-5D0E308DE721}.Release|x86.Build.0 = Release|x86
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|ARM.Build.0 = Debug|ARM
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|x86.ActiveCfg = Debug|x86
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Debug|x86.Build.0 = Debug|x86
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|ARM.ActiveCfg = Release|ARM
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|ARM.Build.0 = Release|ARM
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|x86.ActiveCfg = Release|x86
+		{18A22A8F-7FD3-4670-BBEA-C27815B5B73A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

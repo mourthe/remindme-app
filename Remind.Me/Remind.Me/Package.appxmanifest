@@ -25,7 +25,7 @@
         </m3:InitialRotationPreference>
       </m3:VisualElements>
       <Extensions>
-        <Extension Category="windows.backgroundTasks" EntryPoint="Background.cs">
+        <Extension Category="windows.backgroundTasks" EntryPoint="TaskBackground.LocationTask.cs">
           <BackgroundTasks>
             <Task Type="timer" />
             <m2:Task Type="location" />
