@@ -14,12 +14,8 @@ namespace TaskBackground
         {
             // Get the information of the geofence(s) that have been hit
             var reports = GeofenceMonitor.Current.ReadReports();
+            var report = reports.FirstOrDefault(r => (r.Geofence.Id == "MicrosoftStudioE") && (r.NewState == GeofenceState.Entered));
 
-            GeofenceStateChangeReport report = null; 
-            foreach (var r in reports)
-                if (r.Geofence.Id == "MyGeofenceId" && r.NewState == GeofenceState.Entered)
-                    report = r;
-            
             if (report == null) return;
 
             // Create a toast notification to show a geofence has been hit
@@ -45,6 +41,10 @@ namespace TaskBackground
                 builder.Name = TaskName;
                 builder.TaskEntryPoint = typeof(LocationTask).FullName;
                 builder.SetTrigger(new LocationTrigger(LocationTriggerType.Geofence));
+
+                // Uncomment this if your task requires an internet connection
+                //var condition = new SystemCondition(SystemConditionType.InternetAvailable);
+                //builder.AddCondition(condition);
 
                 builder.Register();
             }

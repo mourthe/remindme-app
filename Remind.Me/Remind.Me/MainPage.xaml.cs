@@ -26,10 +26,10 @@ namespace Remind.Me
     /// </summary>
     public partial class MainPage : Page
     {
-        private ObservableCollection<Reminder> reminders;
-        private ObservableCollection<Todo> todos;
-        private Dictionary<string, Reminder> remindersDic;
-        private Dictionary<string, Todo> todoDic;
+        private ObservableCollection<Reminder> _reminders;
+        private ObservableCollection<Todo> _todos;
+        private Dictionary<string, Reminder> _remindersDic;
+        private Dictionary<string, Todo> _todoDic;
 
         public MainPage()
         {
@@ -38,8 +38,6 @@ namespace Remind.Me
             this.NavigationCacheMode = NavigationCacheMode.Required;
 
             this.LoadCollections();
-
-
         }
 
         private void LoadCollections()
@@ -47,32 +45,36 @@ namespace Remind.Me
             // try to load the todos
             var tds = Database.Main.FetchAllTodos().Result;
             if (tds.Count == 0)
-                this.todos = new ObservableCollection<Todo>();
+                this._todos = new ObservableCollection<Todo>();
             else
-                this.todos = new ObservableCollection<Todo>(tds);
+                this._todos = new ObservableCollection<Todo>(tds);
             
             // try to load the reminders
             var rmdrs = Database.Main.FetchAllReminders().Result;
             if (rmdrs.Count == 0)
-                this.reminders = new ObservableCollection<Reminder>();
+                this._reminders = new ObservableCollection<Reminder>();
             else
-                this.reminders = new ObservableCollection<Reminder>(rmdrs);
+                this._reminders = new ObservableCollection<Reminder>(rmdrs);
 
             // creates the dictionaries
-            this.remindersDic = new Dictionary<string, Reminder>();
-            this.todoDic = new Dictionary<string, Todo>();
+            this._remindersDic = new Dictionary<string, Reminder>();
+            this._todoDic = new Dictionary<string, Todo>();
             
             // populates the dictionaries
-            if (this.todos.Count > 0)
-                foreach (var t in this.todos)
-                    this.todoDic.Add(t.Id, t);
+            if (this._todos.Count > 0)
+                foreach (var t in this._todos)
+                    this._todoDic.Add(t.Id, t);
                 
-            if (this.reminders.Count > 0)
-                foreach (var r in this.reminders)
-                    this.remindersDic.Add(r.Id, r);
+            if (this._reminders.Count > 0)
+                foreach (var r in this._reminders)
+                    this._remindersDic.Add(r.Id, r);
 
-            reminderXAML.Source = this.reminders;
-            todoXAML.Source = this.todos;
+            reminderXAML.Source = this._reminders;
+            todoXAML.Source = this._todos;
+
+
+            // TEST
+            this.Test();
         }
 
         #region Navigation
@@ -89,9 +91,9 @@ namespace Remind.Me
             {
                 var r = (Reminder)e.Parameter;
 
-                if (!this.remindersDic.ContainsKey(r.Id))
+                if (!this._remindersDic.ContainsKey(r.Id))
                 {
-                    this.remindersDic.Add(r.Id, r);
+                    this._remindersDic.Add(r.Id, r);
                     Database.Main.SaveReminder(r);
                 }
                 else
@@ -99,18 +101,18 @@ namespace Remind.Me
                     Database.Main.UpdateReminder(r);
                 }
 
-                this.reminders = new ObservableCollection<Reminder>(this.remindersDic.Values.ToList());
+                this._reminders = new ObservableCollection<Reminder>(this._remindersDic.Values.ToList());
 
-                reminderXAML.Source = this.reminders;
+                reminderXAML.Source = this._reminders;
             }
 
             if (e.Parameter != null &&  CameFromAddTodoPage())
             {
                 var t = (Todo)e.Parameter;
 
-                if (!this.todoDic.ContainsKey(t.Id))
+                if (!this._todoDic.ContainsKey(t.Id))
                 {
-                    this.todoDic.Add(t.Id, t);
+                    this._todoDic.Add(t.Id, t);
                     Database.Main.SaveTodo(t);
                 }
                 else
@@ -118,9 +120,9 @@ namespace Remind.Me
                     Database.Main.UpdateTodo(t);
                 }
 
-                this.todos = new ObservableCollection<Todo>(this.todoDic.Values.ToList());
+                this._todos = new ObservableCollection<Todo>(this._todoDic.Values.ToList());
 
-                todoXAML.Source = this.todos;
+                todoXAML.Source = this._todos;
             }
         }
 
@@ -137,6 +139,8 @@ namespace Remind.Me
         }
 
         #endregion
+
+        #region Commands
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)
         {            
@@ -157,6 +161,32 @@ namespace Remind.Me
             Frame.Navigate(typeof(SettingsPage));
         }
 
+        #endregion
+
+        #region Geofence
+
+        private void SendActiveReminders()
+        {
+            var localList = _reminders.Select(r => r.Local).ToList();
+
+            TaskBackground.GeofencesHelper.RemindersPlaces = localList;
+        }
+
+        private void SendSettings()
+        {
+            var settings = Remind.Me.Database.Main.GetSettings().Result;
+
+            TaskBackground.GeofencesHelper.SetSettings(settings);
+        }
+
+        private void Test()
+        {
+            TaskBackground.GeofencesHelper.CreateGeofence("casa", -22.9362, -43.1895, 200.0);
+            TaskBackground.LocationTask.Register();
+        }
+
+        #endregion
+
         #region TODO
 
         private void TodoCheckBox_Click(object sender, RoutedEventArgs e)
@@ -165,11 +195,11 @@ namespace Remind.Me
             var idx = GetTodoIdx();
 
             // remove from the database and lists
-            var current = this.todos.ElementAt(idx);
+            var current = this._todos.ElementAt(idx);
 
-            this.todoDic.Remove(current.Id);
+            this._todoDic.Remove(current.Id);
             Database.Main.RemoveTodo(current.Id);
-            this.todos.RemoveAt(idx);
+            this._todos.RemoveAt(idx);
 
         }
 
@@ -183,16 +213,16 @@ namespace Remind.Me
             // get the index of the TODO
             var idx = GetTodoIdx();
 
-            Frame.Navigate(typeof(AddTodoPage), this.todos.ElementAt(idx));
-            this.todos.RemoveAt(idx);
+            Frame.Navigate(typeof(AddTodoPage), this._todos.ElementAt(idx));
+            this._todos.RemoveAt(idx);
         }
 
         private int GetTodoIdx()
         {
             var idx = -1;
-            for (int i = 0; i < this.todos.Count; i++)
+            for (int i = 0; i < this._todos.Count; i++)
             {
-                if (this.todos.ElementAt(i).Id.Equals((lvtodos.SelectedItems[0] as Todo).Id))
+                if (this._todos.ElementAt(i).Id.Equals((lvtodos.SelectedItems[0] as Todo).Id))
                 {
                     idx = i; break;
                 }
@@ -203,9 +233,9 @@ namespace Remind.Me
         private int GetTodoIdx(string id)
         {
             var idx = -1;
-            for (int i = 0; i < this.todos.Count; i++)
+            for (int i = 0; i < this._todos.Count; i++)
             {
-                if (this.todos.ElementAt(i).Id.Equals(id))
+                if (this._todos.ElementAt(i).Id.Equals(id))
                 {
                     idx = i; break;
                 }
@@ -217,7 +247,7 @@ namespace Remind.Me
         {
             var idx = GetTodoIdx();
 
-            Frame.Navigate(typeof(TodoDetails), this.todos.ElementAt(idx));
+            Frame.Navigate(typeof(TodoDetails), this._todos.ElementAt(idx));
         }
 
         #endregion
@@ -237,19 +267,19 @@ namespace Remind.Me
             var idx = GetReminderIdx();
 
             // remove from the database
-            var current = this.reminders.ElementAt(idx);
+            var current = this._reminders.ElementAt(idx);
 
             Database.Main.RemoveReminder(current.Id);
-            this.remindersDic.Remove(current.Id);
-            this.reminders.RemoveAt(idx);
+            this._remindersDic.Remove(current.Id);
+            this._reminders.RemoveAt(idx);
         }
 
         private int GetReminderIdx()
         {
             var idx = -1;
-            for (int i = 0; i < this.reminders.Count; i++)
+            for (int i = 0; i < this._reminders.Count; i++)
             {
-                if (this.reminders.ElementAt(i).Id.Equals((lvreminders.SelectedItem as Reminder).Id))
+                if (this._reminders.ElementAt(i).Id.Equals((lvreminders.SelectedItem as Reminder).Id))
                 {
                     idx = i; break;
                 }
@@ -260,9 +290,9 @@ namespace Remind.Me
         private int GetReminderIdx(string id)
         {
             var idx = -1;
-            for (int i = 0; i < this.reminders.Count; i++)
+            for (int i = 0; i < this._reminders.Count; i++)
             {
-                if (this.reminders.ElementAt(i).Id.Equals(id))
+                if (this._reminders.ElementAt(i).Id.Equals(id))
                 {
                     idx = i; break;
                 }
@@ -274,25 +304,25 @@ namespace Remind.Me
         {
             // get the index of the Reminder
             var idx = -1;
-            for (int i = 0; i < this.reminders.Count; i++)
+            for (int i = 0; i < this._reminders.Count; i++)
             {
-                if (this.reminders.ElementAt(i).Title.Equals((lvreminders.SelectedItems[0] as Reminder).Title))
+                if (this._reminders.ElementAt(i).Title.Equals((lvreminders.SelectedItems[0] as Reminder).Title))
                 {
                     idx = i; break;
                 }
             }
 
-            Frame.Navigate(typeof(AddReminderPage), this.reminders.ElementAt(idx));
-            this.reminders.RemoveAt(idx);
+            Frame.Navigate(typeof(AddReminderPage), this._reminders.ElementAt(idx));
+            this._reminders.RemoveAt(idx);
         }
 
         private void reminderToggle_Toggled(object sender, RoutedEventArgs e)
         {
-            if (this.reminders.Count > 0)
+            if (this._reminders.Count > 0)
             {
                 var idx = GetReminderIdx();
 
-                var r = this.reminders.ElementAt(idx);
+                var r = this._reminders.ElementAt(idx);
                 r.Active = (sender as ToggleSwitch).IsOn;
                 Database.Main.UpdateReminder(r);
             }
@@ -301,7 +331,7 @@ namespace Remind.Me
         private void ReminderDetails_Click(object sender, RoutedEventArgs e)
         {
             var idx = GetReminderIdx();
-            Frame.Navigate(typeof(ReminderDetails), this.reminders.ElementAt(idx));
+            Frame.Navigate(typeof(ReminderDetails), this._reminders.ElementAt(idx));
         }
 
         #endregion
