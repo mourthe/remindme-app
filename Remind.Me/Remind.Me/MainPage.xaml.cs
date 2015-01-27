@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -74,7 +77,7 @@ namespace Remind.Me
 
 
             // TEST
-            this.Test();
+            // this.Test();
         }
 
         #region Navigation
@@ -104,6 +107,8 @@ namespace Remind.Me
                 this._reminders = new ObservableCollection<Reminder>(this._remindersDic.Values.ToList());
 
                 reminderXAML.Source = this._reminders;
+
+                // FakeClick();
             }
 
             if (e.Parameter != null &&  CameFromAddTodoPage())
@@ -124,6 +129,38 @@ namespace Remind.Me
 
                 todoXAML.Source = this._todos;
             }
+
+            if (e.Parameter != null && CameFromReminderLaunchPage())
+            {
+                var r = (Reminder)e.Parameter;
+
+                if (!this._remindersDic.ContainsKey(r.Id))
+                {
+                    this._remindersDic.Add(r.Id, r);
+                    Database.Main.SaveReminder(r);
+                }
+                else
+                {
+                    Database.Main.UpdateReminder(r);
+                }
+
+                this._reminders = new ObservableCollection<Reminder>(this._remindersDic.Values.ToList());
+
+                reminderXAML.Source = this._reminders;
+            }
+        }
+
+        public async void FakeClick()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(15));
+
+            DisplayToast();
+        }
+
+        private bool CameFromReminderLaunchPage()
+        {
+            return Frame.BackStack.FirstOrDefault() != null &&
+                Frame.BackStack.Last().SourcePageType.ToString() == "Remind.Me.ReminderLaunch";
         }
 
         private bool CameFromAddRemindersPage()
@@ -338,6 +375,29 @@ namespace Remind.Me
         {
             var idx = GetReminderIdx();
             Frame.Navigate(typeof(ReminderDetails), this._reminders.ElementAt(idx));
+        }
+
+        private void DisplayToast()
+        {
+            var toast = ToastHelper.CreateTextOnlyToast(_reminders.First().Title, "Local: " + _reminders.First().Local);
+            toast.Activated += toast_Activated; 
+            ToastNotificationManager.CreateToastNotifier().Show(toast); 
+        }
+
+        private void toast_Activated(ToastNotification sender, object args)
+        {
+            var bs = new TaskBackground.BingService();
+
+            Dispatcher.RunAsync(0, () =>
+            {
+                var idx = GetReminderIdx();
+                var current = _reminders.ElementAt(idx);
+                this._reminders.RemoveAt(idx);
+                this._remindersDic.Remove(current.Id);
+
+                Database.Main.RemoveReminder(current.Id);
+                Frame.Navigate(typeof(ReminderLaunch), new Container(current, bs.ListNearbyPlaces["Casa"]));
+            });            
         }
 
         #endregion
