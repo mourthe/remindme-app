@@ -28,6 +28,19 @@
             _settings = SettingsFile.Deseralize(settings);
         }
 
+        public static void SetSettings(double d, double la, double lo)
+        {
+            _settings = new SettingsFile(d, la, lo);
+        }
+
+        public static void CreateGeofence(string id, double lat, double lon)
+        {
+            if (_settings != null)
+            {
+                CreateGeofence(id, lat, lon, _settings.Distance);
+            }
+        }
+
         public static void CreateGeofence(string id, double lat, double lon, double radius)
         {
             if (GeofenceMonitor.Current.Geofences.SingleOrDefault(g => g.Id == id) != null) return;
@@ -74,7 +87,14 @@
 
             this.Distance = s.Distance;
             this.Longitude = s.Longitude;
-            this.Latitude = s.Longitude;
+            this.Latitude = s.Latitude;
+        }
+
+        public SettingsFile(double d, double la, double lo)
+        {
+            this.Distance = d;
+            this.Longitude = lo;
+            this.Latitude = la;
         }
 
         public static SettingsFile Deseralize(string st)

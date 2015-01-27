@@ -176,6 +176,7 @@ namespace Remind.Me
             var serialized = new StreamReader(stream).ReadToEnd();
 
             Database.Main.SaveSettings(serialized);
+            TaskBackground.GeofencesHelper.SetSettings(serialized);
 
             Frame.Navigate(typeof(MainPage));
         }

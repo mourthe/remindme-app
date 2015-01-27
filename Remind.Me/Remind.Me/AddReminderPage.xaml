@@ -28,6 +28,7 @@
                 <ComboBoxItem Content="Banco"/>
                 <ComboBoxItem Content="Farmácia"/>
                 <ComboBoxItem Content="Supermercado"/>
+                <ComboBoxItem Content="Cafeteria"/>
                 <ComboBoxItem Content="Casa"/>
             </ComboBox>
             <TextBlock HorizontalAlignment="Left" Text="Detalhes" FontSize="24"/>

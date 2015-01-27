@@ -181,7 +181,13 @@ namespace Remind.Me
 
         private void Test()
         {
-            TaskBackground.GeofencesHelper.CreateGeofence("casa", -22.9362, -43.1895, 200.0);
+            var bingS = new TaskBackground.BingService();
+
+            foreach (var b in bingS.ListNearbyPlaces)
+            {
+                TaskBackground.GeofencesHelper.CreateGeofence(b.Key, b.Value.Position.Latitude, b.Value.Position.Longitude);
+            }
+
             TaskBackground.LocationTask.Register();
         }
 
