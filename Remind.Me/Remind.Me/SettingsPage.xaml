@@ -40,10 +40,10 @@
                 
                 <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource SubheaderTextBlockStyle}" HorizontalAlignment="Left">Distancia de aviso:</TextBlock>
                 <ComboBox  Name="Distance" Grid.Row="0" Grid.Column="1" >
-                    <ComboBoxItem Content="100 m"/>
-                    <ComboBoxItem Content="200 m" IsSelected="True"/>
-                    <ComboBoxItem Content="300 m"/>
-                    <ComboBoxItem Content="500 m"/>
+                    <ComboBoxItem Content="200 m"/>
+                    <ComboBoxItem Content="500 m" IsSelected="True"/>
+                    <ComboBoxItem Content="800 m"/>
+                    <ComboBoxItem Content="1000 m"/>
                 </ComboBox>
             </Grid>
             <StackPanel Grid.Row="1">
